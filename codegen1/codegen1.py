@@ -2,46 +2,127 @@ import json
 from string import Template
 from datetime import datetime
 import os
+import shutil
+############################################################################
+
+# - "$state_file" will look for placeholder 'state_file'
+# - "${state}_file" inserts the 'state' value plus literal '_file'
+templates = ["fsm_xxx.c", 
+             "fsm_xxx.h", 
+             "fsm_xxx_action.c",
+             "fsm_xxx_action.h",
+             "fsm_xxx_event.c",
+             "fsm_xxx_event.h"
+             ]# list of template files
+
 
 # Load configuration
 with open("config.json", "r") as f:
     config = json.load(f)
+############################################################################
 
-fsm = config["fsm"]
-output_file_c = config["output_file"]
-output_file_h = os.path.splitext(output_file_c)[0] + ".h"
-
-# Load templates
-with open("template.c", "r") as tpl_file:
-    c_template = Template(tpl_file.read())
-
-with open("template.h", "r") as tpl_file:
-    h_template = Template(tpl_file.read())
-
-# Prepare data
-states = ",\n    ".join(f"STATE_{s}" for s in fsm["states"])
-events = ",\n    ".join(f"EVENT_{e}" for e in fsm["events"])
+# Prepare substitution data
 generation_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+generation_date = datetime.now().strftime("%Y-%m-%d")
+STATES = ",\n    ".join(f"{config['XXX']}_STATE_{s}" for s in config["STATES"])
+events = ",\n    ".join(f"EVENT_{e}" for e in config["events"])
 
-# Substitute into templates
-c_code = c_template.substitute(
-    states=states,
-    events=events,
-    time=generation_time
+make_trans_table_for_states = "\n\n".join(
+    f'static const fsme_trans_t _trans_{sss}[] =\n'
+    '{\n'
+    f'    {{{config["xxx"]}_event_{config["events"][0]},        {config["XXX"]}_STATE_{config["STATES"][0]}}},\n'
+    '};'
+    for sss in config["states"]
 )
 
-h_code = h_template.substitute(
-    states=states,
-    events=events,
-    time=generation_time
+make_state_table = "\n".join(
+    f'    {{{config["xxx"]}_{sss}_entry,        {config["xxx"]}_{sss}_action,            {config["xxx"]}_{sss}_exit,          ARRAY_AND_SIZE(_trans_{sss}),                "{SSS}"}},'
+    for sss, SSS in zip(config["states"], config["STATES"])
 )
 
-# Write to .c file
-with open(output_file_c, "w") as f:
-    f.write(c_code)
+make_action_func_list = "\n".join(
+    f'void {config["xxx"]}_{sss}_entry(void* fsmp);\n'
+    f'void {config["xxx"]}_{sss}_exit(void* fsmp);\n'
+    f'void {config["xxx"]}_{sss}_action(void* fsmp);\n'  
+    for sss in config["states"])
 
-# Write to .h file
-with open(output_file_h, "w") as f:
-    f.write(h_code)
+make_action_func_bodies = "\n\n".join(
+'/*******************************************************************************\n'
+f'  * @brief  {config["xxx"]} [{sss}] state actions \n'
+'  * @param  *fsmp , to access the state machine\n'
+'  * @retval none\n'
+'  *****************************************************************************/\n'
+f'void {config["xxx"]}_{sss}_entry(void *fsmp)\n'
+'{\n'
+'    fsme_t* fsm = (fsme_t*)fsmp;\n'
+'    fsme_action_printf("[%s/%s] entry.", fsm->name, fsm->states[fsm->current_state].name);\n'
+'}\n\n'
+f'void {config["xxx"]}_{sss}_exit(void *fsmp)\n'
+'{\n'
+'    fsme_t* fsm = (fsme_t*)fsmp;\n'
+'    fsme_action_printf("[%s/%s] exit.", fsm->name, fsm->states[fsm->current_state].name);\n'
+'}\n\n'
+f'void {config["xxx"]}_{sss}_action(void *fsmp)\n'
+'{\n'
+'    fsme_t* fsm = (fsme_t*)fsmp;\n'
+'    fsme_action_printf("%s/%s action.", fsm->name, fsm->states[fsm->current_state].name);\n'
+'}\n'
+for sss in config["states"]
+)
 
-print(f"Code generated in {output_file_c} and {output_file_h}")
+make_event_func_list = "\n".join(
+    f'int32_t {config["xxx"]}_event_{eee}(void* fsmp);'
+    for eee in config["events"]
+)
+
+make_event_func_bodies = "\n\n".join(
+    '/*******************************************************************************\n'
+    f'* @brief  if {eee}\n'
+    '* @param  void *fsmp, to access the state machine\n'
+    '* @retval 1:condition is met\n'
+    '*****************************************************************************/\n'
+    f'int32_t {config["xxx"]}_event_{eee}(void* fsmp)\n'
+    '{\n'
+    '    return 0;\n'
+    '}'
+    for eee in config["events"]
+)
+
+substitutions = {
+    "STATES": STATES,
+    "events": events,
+    "time": generation_time,
+    "date": generation_date,
+    "xxx": config["xxx"], # ${xxx}
+    "XXX": config["XXX"], # ${XXX}
+    "STATE_0": config['STATE_0'],
+    "state_0": config['state_0'],
+    "trans_table": make_trans_table_for_states,
+    "state_table": make_state_table,
+    "action_func_list_for_states": make_action_func_list,
+    "action_func_bodies": make_action_func_bodies,
+    "event_func_list": make_event_func_list,
+    "event_func_bodies": make_event_func_bodies,
+}
+
+############################################################################
+# Process each template
+base_folder = "generated"
+if os.path.exists(base_folder):# Delete 'generated' folder if it exists
+    shutil.rmtree(base_folder)
+
+for tpl in templates:
+    with open(tpl, "r") as tpl_file:
+        template = Template(tpl_file.read())
+
+    code = template.substitute(substitutions)# generate code
+  
+    out_file = tpl.replace("xxx", config["xxx"])# Build output file name (replace xxx with actual name)
+    out_file = os.path.join("generated", out_file) 
+    os.makedirs(os.path.dirname(out_file), exist_ok=True)# Ensure the parent directory exists
+
+    with open(out_file, "w") as f:# write file
+        f.write(code)
+
+    print(f"-- Generated: {out_file}")
+print(f"---- codegen1({config['codegen1_version']}) creates {len(templates)} files in total.")

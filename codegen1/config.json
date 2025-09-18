@@ -1,7 +1,19 @@
 {
-  "output_file": "fsm_generated.c",
-  "fsm": {
-    "states": ["IDLE", "RUNNING", "ERROR"],
-    "events": ["START", "STOP", "FAIL"]
-  }
+  "codegen1_version": "V1 20250918",
+  "xxx": "lv0",
+  "XXX": "LV0",
+  "STATES": ["SLEEP", "RUN", "STOP"],
+  "states": ["sleep", "run", "stop"],
+  "STATE_0": "SLEEP",
+  "state_0": "sleep",
+  "events": [
+    "have_run_event1", 
+    "have_run_event2", 
+    "have_run_event3",
+    "have_run_event4",
+    "have_stop_event1",
+    "have_stop_event2",
+    "emergency_event1",
+    "emergency_event2"
+  ]
 }

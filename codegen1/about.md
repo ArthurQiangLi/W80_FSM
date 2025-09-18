@@ -5,6 +5,14 @@
 1. Read FSM data from config.json.
 1. Generate a .c file (named according to output_file in the config).
 
+## How to use it?
+
+```sh
+1-set parameters in config.json
+2-run:
+python codegen1.py
+```
+
 ## How it works?
 
 ### Step1: formating the 'states'
