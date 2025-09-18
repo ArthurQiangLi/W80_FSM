@@ -9,20 +9,9 @@ with open("config.json", "r") as f:
 fsm = config["fsm"]
 output_file = config["output_file"]
 
-# Template with timestamp
-c_template = Template("""/* 
- * Auto-generated FSM code
- * Generation time: $time
- */
-
-typedef enum {
-    $states
-} State;
-
-typedef enum {
-    $events
-} Event;
-""")
+# Load template from file
+with open("template.c", "r") as tpl_file:
+    c_template = Template(tpl_file.read())
 
 # Prepare data
 states = ",\n    ".join(f"STATE_{s}" for s in fsm["states"])
