@@ -124,5 +124,5 @@ for tpl in templates:
     with open(out_file, "w") as f:# write file
         f.write(code)
 
-    print(f"-- Generated: {out_file}")
+    print(f">> {out_file}")
 print(f"---- codegen1({config['codegen1_version']}) creates {len(templates)} files in total.")

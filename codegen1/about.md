@@ -3,7 +3,7 @@
 ## Feature List
 
 1. Read FSM data from config.json.
-1. Generate a .c file (named according to output_file in the config).
+1. Generate 6 files.
 
 ## How to use it?
 
