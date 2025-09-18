@@ -9,6 +9,6 @@ This software is free (of charge) to use, but you must obtain the author's permi
 
 ## [1. Timeout Usage.md](./articles/how-to-use-timeout.md)
 
-## [2. code generator.md]()
+## [2. code generator.md](./articles/code-gen/code-gen.md)
 
 # ~END~

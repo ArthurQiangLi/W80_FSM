@@ -1,0 +1,7 @@
+{
+  "output_file": "fsm_generated.c",
+  "fsm": {
+    "states": ["IDLE", "RUNNING", "ERROR"],
+    "events": ["START", "STOP", "FAIL"]
+  }
+}
