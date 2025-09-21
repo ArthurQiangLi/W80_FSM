@@ -4,6 +4,7 @@
 
 1. Read FSM data from config.json.
 1. Generate 6 files.
+1. One-way generation, delete all before generating.
 
 ## How to use it?
 
@@ -11,6 +12,17 @@
 1-set parameters in config.json
 2-run:
 python codegen1.py
+```
+
+How to set the parameters?
+```
+  "codegen1_version": "V1 20250918", //version number, don't change it. 
+  "xxx": "lv0", //the fsm's name in little case
+  "XXX": "LV0", //the fsm's name in big case
+  "STATES": ["SLEEP", "RUN", "STOP"], //the states' name, big case
+  "states": ["sleep", "run", "stop"], //the state's name, little case
+  "STATE_0": "SLEEP", // the initial state's name, big case
+  "state_0": "sleep", // the intitial state's name, little case
 ```
 
 ## How it works?
