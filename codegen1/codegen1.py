@@ -121,6 +121,7 @@ substitutions = {
     "action_func_bodies": make_action_func_bodies,
     "event_func_list": make_event_func_list,
     "event_func_bodies": make_event_func_bodies,
+    "version": config["codegen1_version"],
 }
 
 ############################################################################
