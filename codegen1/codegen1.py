@@ -16,9 +16,24 @@ templates = ["fsm_xxx.c",
              ]# list of template files
 
 
+
+def check_json_syntax(filename):
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            json.load(f)  # Try parsing
+        print("config.JSON syntax is valid.")
+    except json.JSONDecodeError as e:
+        print(f"config.JSON syntax error: {e}")
+############################################################################
+
 # Load configuration
-with open("config.json", "r") as f:
-    config = json.load(f)
+try:
+    with open("config.json", "r", encoding="utf-8") as f:
+        config = json.load(f)  # Try parsing
+    print("config.JSON syntax is valid.")
+except json.JSONDecodeError as e:
+    print(f"\r\n**********\r\n config.JSON syntax error. {e} \r\n**********\r\n")
+
 ############################################################################
 
 # Prepare substitution data
@@ -54,18 +69,15 @@ f'  * @brief  {config["xxx"]} [{sss}] state actions \n'
 '  *****************************************************************************/\n'
 f'void {config["xxx"]}_{sss}_entry(void *fsmp)\n'
 '{\n'
-'    fsme_t* fsm = (fsme_t*)fsmp;\n'
-'    fsme_action_printf("[%s/%s] entry.", fsm->name, fsm->states[fsm->current_state].name);\n'
+'    fsme_action_printf("[%s/%s] entry.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));\n'
 '}\n\n'
 f'void {config["xxx"]}_{sss}_exit(void *fsmp)\n'
 '{\n'
-'    fsme_t* fsm = (fsme_t*)fsmp;\n'
-'    fsme_action_printf("[%s/%s] exit.", fsm->name, fsm->states[fsm->current_state].name);\n'
+'    fsme_action_printf("[%s/%s] exit.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));\n'
 '}\n\n'
 f'void {config["xxx"]}_{sss}_action(void *fsmp)\n'
 '{\n'
-'    fsme_t* fsm = (fsme_t*)fsmp;\n'
-'    fsme_action_printf("%s/%s action.", fsm->name, fsm->states[fsm->current_state].name);\n'
+'    fsme_action_printf("[%s/%s] action.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));\n'
 '}\n'
 for sss in config["states"]
 )
@@ -83,7 +95,13 @@ make_event_func_bodies = "\n\n".join(
     '*****************************************************************************/\n'
     f'int32_t {config["xxx"]}_event_{eee}(void* fsmp)\n'
     '{\n'
-    '    return 0;\n'
+    '    if (0) {\n'
+    f'        fsme_event_printf("%s, event [{eee}].", ((fsme_t*)fsmp)->name);\n'
+    '        return 1;\n'
+    '    }\n'
+    '    else {\n'
+    '        return 0;\n'
+    '    }\n'
     '}'
     for eee in config["events"]
 )
@@ -126,3 +144,7 @@ for tpl in templates:
 
     print(f">> {out_file}")
 print(f"---- codegen1({config['codegen1_version']}) creates {len(templates)} files in total.")
+
+
+############################################################################
+

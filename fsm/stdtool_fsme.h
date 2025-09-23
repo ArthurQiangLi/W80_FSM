@@ -32,6 +32,9 @@
                                                             //a shortcut writing only
 #define ARRAY_AND_SIZE(x)       (x), ARRAY_SIZE(x)
 
+#define FSM_NAME(fsmp)          (((fsme_t*)fsmp)->name)
+#define CURR_STATE_NAME(fsmp)   (((fsme_t*)fsmp)->states[((fsme_t*)fsmp)->current_state].name)
+
                                                             //to get systime for timout
 extern uint32_t xTaskGetTickCount(void);
 #define fsme_get_tick_count     xTaskGetTickCount
@@ -41,14 +44,14 @@ extern uint32_t xTaskGetTickCount(void);
 ********************************* Exported types *******************************
 *******************************************************************************/
 
-typedef int32_t   (*fsme_event_t)(void *pfsm);              //fnct pointer fsme_event_t, format: int xxx(void *)
-typedef void      (*fsme_action_t)(void *pfsm);             //fnct pointer fsme_action_t, format: void xxx(void *)
+typedef int32_t         (*fsme_event_t)(void *pfsm);        //fnct pointer fsme_event_t, format: int xxx(void *)
+typedef void            (*fsme_action_t)(void *pfsm);       //fnct pointer fsme_action_t, format: void xxx(void *)
 
 /*trans struct, a event and the deduced state */
 typedef struct 
 {
-    fsme_event_t    event;                                  //event (input) function
-    int32_t         next_state;
+    fsme_event_t        event;                              //event (input) function
+    int32_t             next_state;
 }fsme_trans_t;
 
 

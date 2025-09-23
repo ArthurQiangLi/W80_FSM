@@ -3,7 +3,7 @@
   * @file    LV0 STATE MACHINE
   * @author  Arthur, Waterloo
   * @version V1.0 
-  * @date    2025-09-18
+  * @date    2025-09-23
   * @brief   state machine flow chart is defined in this file.
   *
   *                      

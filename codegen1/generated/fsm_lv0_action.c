@@ -3,7 +3,7 @@
   * @file    LV0 STATE MACHINE ACTIONS
   * @author  ARTHUR
   * @version V1.0
-  * @date    2025-09-18
+  * @date    2025-09-23
   * @brief   actions when staying at each state.
   * 
   *                      
@@ -56,20 +56,17 @@ LV0_ACTION_T _lv0_action_t;
   *****************************************************************************/
 void lv0_sleep_entry(void *fsmp)
 {
-    fsme_t* fsm = (fsme_t*)fsmp;
-    fsme_action_printf("[%s/%s] entry.", fsm->name, fsm->states[fsm->current_state].name);
+    fsme_action_printf("[%s/%s] entry.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));
 }
 
 void lv0_sleep_exit(void *fsmp)
 {
-    fsme_t* fsm = (fsme_t*)fsmp;
-    fsme_action_printf("[%s/%s] exit.", fsm->name, fsm->states[fsm->current_state].name);
+    fsme_action_printf("[%s/%s] exit.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));
 }
 
 void lv0_sleep_action(void *fsmp)
 {
-    fsme_t* fsm = (fsme_t*)fsmp;
-    fsme_action_printf("%s/%s action.", fsm->name, fsm->states[fsm->current_state].name);
+    fsme_action_printf("[%s/%s] action.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));
 }
 
 
@@ -80,20 +77,17 @@ void lv0_sleep_action(void *fsmp)
   *****************************************************************************/
 void lv0_run_entry(void *fsmp)
 {
-    fsme_t* fsm = (fsme_t*)fsmp;
-    fsme_action_printf("[%s/%s] entry.", fsm->name, fsm->states[fsm->current_state].name);
+    fsme_action_printf("[%s/%s] entry.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));
 }
 
 void lv0_run_exit(void *fsmp)
 {
-    fsme_t* fsm = (fsme_t*)fsmp;
-    fsme_action_printf("[%s/%s] exit.", fsm->name, fsm->states[fsm->current_state].name);
+    fsme_action_printf("[%s/%s] exit.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));
 }
 
 void lv0_run_action(void *fsmp)
 {
-    fsme_t* fsm = (fsme_t*)fsmp;
-    fsme_action_printf("%s/%s action.", fsm->name, fsm->states[fsm->current_state].name);
+    fsme_action_printf("[%s/%s] action.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));
 }
 
 
@@ -104,20 +98,17 @@ void lv0_run_action(void *fsmp)
   *****************************************************************************/
 void lv0_stop_entry(void *fsmp)
 {
-    fsme_t* fsm = (fsme_t*)fsmp;
-    fsme_action_printf("[%s/%s] entry.", fsm->name, fsm->states[fsm->current_state].name);
+    fsme_action_printf("[%s/%s] entry.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));
 }
 
 void lv0_stop_exit(void *fsmp)
 {
-    fsme_t* fsm = (fsme_t*)fsmp;
-    fsme_action_printf("[%s/%s] exit.", fsm->name, fsm->states[fsm->current_state].name);
+    fsme_action_printf("[%s/%s] exit.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));
 }
 
 void lv0_stop_action(void *fsmp)
 {
-    fsme_t* fsm = (fsme_t*)fsmp;
-    fsme_action_printf("%s/%s action.", fsm->name, fsm->states[fsm->current_state].name);
+    fsme_action_printf("[%s/%s] action.", FSM_NAME(fsmp), CURR_STATE_NAME(fsmp));
 }
 
 

@@ -3,7 +3,7 @@
   * @file    fsm_lv0_event.c
   * @author  ARTHUR
   * @version V1.0 
-  * @date    2025-09-18
+  * @date    2025-09-23
   * @brief   None
   *
   *                      
@@ -52,7 +52,13 @@
 *****************************************************************************/
 int32_t lv0_event_have_run_event1(void* fsmp)
 {
-    return 0;
+    if (0) {
+        fsme_event_printf("%s, event [have_run_event1].", ((fsme_t*)fsmp)->name);
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 /*******************************************************************************
@@ -62,7 +68,13 @@ int32_t lv0_event_have_run_event1(void* fsmp)
 *****************************************************************************/
 int32_t lv0_event_have_run_event2(void* fsmp)
 {
-    return 0;
+    if (0) {
+        fsme_event_printf("%s, event [have_run_event2].", ((fsme_t*)fsmp)->name);
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 /*******************************************************************************
@@ -72,7 +84,13 @@ int32_t lv0_event_have_run_event2(void* fsmp)
 *****************************************************************************/
 int32_t lv0_event_have_run_event3(void* fsmp)
 {
-    return 0;
+    if (0) {
+        fsme_event_printf("%s, event [have_run_event3].", ((fsme_t*)fsmp)->name);
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 /*******************************************************************************
@@ -82,7 +100,13 @@ int32_t lv0_event_have_run_event3(void* fsmp)
 *****************************************************************************/
 int32_t lv0_event_have_run_event4(void* fsmp)
 {
-    return 0;
+    if (0) {
+        fsme_event_printf("%s, event [have_run_event4].", ((fsme_t*)fsmp)->name);
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 /*******************************************************************************
@@ -92,7 +116,13 @@ int32_t lv0_event_have_run_event4(void* fsmp)
 *****************************************************************************/
 int32_t lv0_event_have_stop_event1(void* fsmp)
 {
-    return 0;
+    if (0) {
+        fsme_event_printf("%s, event [have_stop_event1].", ((fsme_t*)fsmp)->name);
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 /*******************************************************************************
@@ -102,7 +132,13 @@ int32_t lv0_event_have_stop_event1(void* fsmp)
 *****************************************************************************/
 int32_t lv0_event_have_stop_event2(void* fsmp)
 {
-    return 0;
+    if (0) {
+        fsme_event_printf("%s, event [have_stop_event2].", ((fsme_t*)fsmp)->name);
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 /*******************************************************************************
@@ -112,7 +148,13 @@ int32_t lv0_event_have_stop_event2(void* fsmp)
 *****************************************************************************/
 int32_t lv0_event_emergency_event1(void* fsmp)
 {
-    return 0;
+    if (0) {
+        fsme_event_printf("%s, event [emergency_event1].", ((fsme_t*)fsmp)->name);
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 /*******************************************************************************
@@ -122,7 +164,13 @@ int32_t lv0_event_emergency_event1(void* fsmp)
 *****************************************************************************/
 int32_t lv0_event_emergency_event2(void* fsmp)
 {
-    return 0;
+    if (0) {
+        fsme_event_printf("%s, event [emergency_event2].", ((fsme_t*)fsmp)->name);
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 /********************************* end of file ********************************/
