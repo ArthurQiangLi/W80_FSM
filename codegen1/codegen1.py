@@ -45,7 +45,10 @@ events = ",\n    ".join(f"EVENT_{e}" for e in config["events"])
 make_trans_table_for_states = "\n\n".join(
     f'static const fsme_trans_t _trans_{sss}[] =\n'
     '{\n'
-    f'    {{{config["xxx"]}_event_{config["events"][0]},        {config["XXX"]}_STATE_{config["STATES"][0]}}},\n'
+    + "".join(
+        f'    {{{config["xxx"]}_event_{eee},        {config["XXX"]}_STATE_{config["STATES"][0]}}},\n'
+        for eee in config["events"]
+    ) +
     '};'
     for sss in config["states"]
 )

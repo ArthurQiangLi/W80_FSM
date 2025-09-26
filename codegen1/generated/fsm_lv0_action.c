@@ -3,7 +3,7 @@
   * @file    LV0 STATE MACHINE ACTIONS
   * @author  ARTHUR
   * @version V1.0
-  * @date    2025-09-23
+  * @date    2025-09-25
   * @brief   actions when staying at each state.
   * 
   *                      

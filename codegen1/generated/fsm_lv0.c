@@ -3,7 +3,7 @@
   * @file    LV0 STATE MACHINE
   * @author  Arthur, Waterloo
   * @version V1.0 
-  * @date    2025-09-23
+  * @date    2025-09-25
   * @brief   state machine flow chart is defined in this file.
   *
   *                      
@@ -58,16 +58,37 @@ static fsme_t _fsm_lv0_stru;
 static const fsme_trans_t _trans_sleep[] =
 {
     {lv0_event_have_run_event1,        LV0_STATE_SLEEP},
+    {lv0_event_have_run_event2,        LV0_STATE_SLEEP},
+    {lv0_event_have_run_event3,        LV0_STATE_SLEEP},
+    {lv0_event_have_run_event4,        LV0_STATE_SLEEP},
+    {lv0_event_have_stop_event1,        LV0_STATE_SLEEP},
+    {lv0_event_have_stop_event2,        LV0_STATE_SLEEP},
+    {lv0_event_emergency_event1,        LV0_STATE_SLEEP},
+    {lv0_event_emergency_event2,        LV0_STATE_SLEEP},
 };
 
 static const fsme_trans_t _trans_run[] =
 {
     {lv0_event_have_run_event1,        LV0_STATE_SLEEP},
+    {lv0_event_have_run_event2,        LV0_STATE_SLEEP},
+    {lv0_event_have_run_event3,        LV0_STATE_SLEEP},
+    {lv0_event_have_run_event4,        LV0_STATE_SLEEP},
+    {lv0_event_have_stop_event1,        LV0_STATE_SLEEP},
+    {lv0_event_have_stop_event2,        LV0_STATE_SLEEP},
+    {lv0_event_emergency_event1,        LV0_STATE_SLEEP},
+    {lv0_event_emergency_event2,        LV0_STATE_SLEEP},
 };
 
 static const fsme_trans_t _trans_stop[] =
 {
     {lv0_event_have_run_event1,        LV0_STATE_SLEEP},
+    {lv0_event_have_run_event2,        LV0_STATE_SLEEP},
+    {lv0_event_have_run_event3,        LV0_STATE_SLEEP},
+    {lv0_event_have_run_event4,        LV0_STATE_SLEEP},
+    {lv0_event_have_stop_event1,        LV0_STATE_SLEEP},
+    {lv0_event_have_stop_event2,        LV0_STATE_SLEEP},
+    {lv0_event_emergency_event1,        LV0_STATE_SLEEP},
+    {lv0_event_emergency_event2,        LV0_STATE_SLEEP},
 };
 
 /*******************************************************************************
