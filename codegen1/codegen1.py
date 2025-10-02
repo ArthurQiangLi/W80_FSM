@@ -15,8 +15,6 @@ templates = ["fsm_xxx.c",
              "fsm_xxx_event.h"
              ]# list of template files
 
-
-
 def check_json_syntax(filename):
     try:
         with open(filename, "r", encoding="utf-8") as f:
@@ -114,8 +112,8 @@ substitutions = {
     "events": events,
     "time": generation_time,
     "date": generation_date,
-    "xxx": config["xxx"], # ${xxx}
-    "XXX": config["XXX"], # ${XXX}
+    "xxx": config["xxx"], # ${xxx} is used for making 1. event func names; 2. action entry/exit/action func names
+    "XXX": config["XXX"], # ${XXX} is used for making 1. states' names and name strings
     "STATE_0": config['STATE_0'],
     "state_0": config['state_0'],
     "trans_table": make_trans_table_for_states,
