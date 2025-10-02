@@ -4,9 +4,9 @@
 
 How `timeout` works? 
 - Data: the state machine struct holds `timeout` (stores the timeout ts in ms) and `timeout_flag` for this function. <br> Note all state share one `timeout` data. 
-- `fsm_set_timeout_in_state_entry()` and `fsm_common_event_timeout()` is offered for this function.
-- Again, because `timeout` is shared, to use it, you need to set it eveytime when you enter a state.
-- `timeout_flag` is cleared forcely in `update()` every cycle. 
+- `fsm_set_timeout_in_state_entry()` and `fsm_common_event_timeout()` are offered for this function.
+- Again, because `timeout` is shared, to use it, you need to set it eveytime upon entering a state.
+- `timeout_flag` is reset forcely in `update()` in every cycle. 
 
 
 ```c
@@ -18,7 +18,7 @@ static void lv2_s1_entry(void *fsmp)
     uint32_t  timeout;
     timeout = 1000 * AUTO_RUN_TIMEOUT_S;
     fsm_set_timeout_in_state_entry(pfsm, timeout);
-    USR_LOG("id=%d, set timeout = %d ms", id,  timeout);
+    USR_LOG("set timeout = %d ms",  timeout);
 }
 
 static const fsme_trans_t Lv1_Trans_Fault[] =
@@ -37,7 +37,7 @@ static const fsme_trans_t Lv1_Trans_Fault[] =
     ts = fsme_get_tick_count();
 
     /*if have timeout setting , and it is sure timeout*/
-    if((fsm->timeout>0 && ts - fsm->ts_entry)> fsm->timeout) {
+    if(fsm->timeout>0 && (ts - fsm->ts_entry) > fsm->timeout) {
         fsme_dbg_log("[event timeout] in [%s] set=%d ms.", fsm->name, fsm->timeout);
         fsm->timeout_flag = 1;
         return 1;
